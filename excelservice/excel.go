@@ -3,15 +3,19 @@ package excelservice
 import (
 	"github.com/xuri/excelize/v2"
 	"log"
+	"os"
 )
 
-func open() string {
-	f, err := excelize.OpenFile("")
+func Open() string {
+	fileName := os.Getenv("CLOUDINARY_URL")
+
+	f, err := excelize.OpenFile(fileName)
 	if err != nil {
 		log.Fatal(err)
 	}
+	defer f.Close()
 
-	cell, err := f.GetCellValue("value", "")
+	cell, err := f.GetCellValue("", "")
 	if err != nil {
 		log.Fatal(err)
 	}

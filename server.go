@@ -4,6 +4,7 @@ import (
 	server "cloudinary_demo/cmd/REST"
 	"cloudinary_demo/controller"
 	"fmt"
+	"os"
 )
 
 var (
@@ -15,6 +16,7 @@ func main() {
 	route.GET("/get", controller.GetPost)
 	route.GET("/register", controller.Register)
 
+	port := os.Getenv("PORT")
 	fmt.Println("Serving running on port 8000")
-	route.SERVE(":8000")
+	route.SERVE(port)
 }

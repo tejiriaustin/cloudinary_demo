@@ -1,31 +1,15 @@
 package database
 
 import (
-	"net/http"
-	"os"
+	"cloudinary_demo/excelservice"
 )
 
-func getfile() error {
-	fileAddress := os.Getenv("CLOUDINARY_URL")
-
-	resp, err := http.Get(fileAddress)
-	if err != nil {
-		return http.ErrMissingFile
-	}
-	defer resp.Body.Close()
-
-	return nil
-}
 func (r *repo) Save(int642 int64) error {
+	excelservice.Open()
 	return nil
 }
 
 func (r *repo) FindAll() error {
-	err := getfile()
-	if err != nil {
-		return http.ErrMissingFile
-	}
-
 	return nil
 }
 
