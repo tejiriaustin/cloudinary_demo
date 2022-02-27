@@ -5,6 +5,7 @@ import (
 	"cloudinary_demo/model"
 	"cloudinary_demo/service"
 	"encoding/json"
+	"log"
 	"net/http"
 )
 
@@ -15,11 +16,19 @@ var (
 )
 
 func Register(w http.ResponseWriter, r *http.Request) {
+	err := json.NewDecoder(r.Body).Decode(req)
+	if err != nil {
+		return
+	}
+
 	token, err := m.CreateToken()
 	if err != nil {
 		return
 	}
-	json.NewEncoder(w).Encode(token)
+	err = json.NewEncoder(w).Encode(token)
+	if err != nil {
+		return
+	}
 
 }
 
@@ -35,12 +44,16 @@ func GetPost(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err = post.FindAllService(); err != nil {
+	t, err := post.FindAllService()
+	if err != nil {
 		return
 	}
+
+	err = json.NewEncoder(w).Encode(t)
 }
 
 func AddPost(w http.ResponseWriter, r *http.Request) {
+
 	err := json.NewDecoder(r.Body).Decode(req)
 	if err != nil {
 		return
@@ -50,7 +63,13 @@ func AddPost(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if err = post.AddService(); err != nil {
+	new := model.Data{}
+	err = json.NewDecoder(r.Body).Decode(new)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	if err = post.AddService(new); err != nil {
 		return
 	}
 }

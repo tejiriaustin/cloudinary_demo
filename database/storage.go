@@ -1,12 +1,16 @@
 package database
 
-type repo struct{}
+import "cloudinary_demo/model"
+
+type repo struct {
+	model.Data
+}
 
 //TODO: FLESH OUT THE DATABASE TO SUPPORT CLOUDINARY
 
 type Storage interface {
-	Save(int642 int64) error
-	FindAll() error
+	Save(data model.Data) error
+	FindAll() ([][]string, error)
 	Find() error
 }
 

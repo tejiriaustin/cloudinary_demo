@@ -8,7 +8,7 @@ import (
 )
 
 var (
-	route server.Router = server.NewMuxRouter()
+	route = server.NewMuxRouter()
 )
 
 func main() {
@@ -17,6 +17,7 @@ func main() {
 	route.GET("/register", controller.Register)
 
 	port := os.Getenv("PORT")
+	fmt.Println(port)
 	fmt.Println("Serving running on port 8000")
 	route.SERVE(port)
 }

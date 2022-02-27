@@ -1,16 +1,24 @@
 package database
 
 import (
-	"cloudinary_demo/excelservice"
+	"cloudinary_demo/Thirdparty/excelservice"
+	"cloudinary_demo/model"
 )
 
-func (r *repo) Save(int642 int64) error {
-	excelservice.Open()
+func (r *repo) Save(data model.Data) error {
+	err := excelservice.SaveToFile(data)
+	if err != nil {
+		return err
+	}
 	return nil
 }
 
-func (r *repo) FindAll() error {
-	return nil
+func (r *repo) FindAll() ([][]string, error) {
+	t, err := excelservice.OpenAndRead()
+	if err != nil {
+		return nil, err
+	}
+	return t, nil
 }
 
 func (r *repo) Find() error {

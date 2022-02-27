@@ -2,8 +2,7 @@ package service
 
 import (
 	"cloudinary_demo/database"
-	"math/rand"
-
+	"cloudinary_demo/model"
 	validation "github.com/go-ozzo/ozzo-validation"
 )
 
@@ -14,9 +13,9 @@ type post struct {
 }
 
 type Service interface {
-	AddService() error
+	AddService(data model.Data) error
 	FindService() error
-	FindAllService() error
+	FindAllService() ([][]string, error)
 	ValidateService() error
 }
 
@@ -24,13 +23,10 @@ func NewService() Service {
 	return &post{}
 }
 
-var (
-	storage database.Storage = database.NewCloudStore()
-)
+var storage = database.NewCloudStore()
 
-func (n *post) AddService() error {
-	Id := rand.Int63()
-	err := storage.Save(Id)
+func (n *post) AddService(data model.Data) error {
+	err := storage.Save(data)
 	if err != nil {
 		return err
 	}
@@ -45,12 +41,12 @@ func (n *post) FindService() error {
 	return nil
 }
 
-func (n *post) FindAllService() error {
-	err := storage.FindAll()
+func (n *post) FindAllService() ([][]string, error) {
+	t, err := storage.FindAll()
 	if err != nil {
-		return err
+		return nil, err
 	}
-	return nil
+	return t, nil
 }
 
 func (n *post) ValidateService() error {
