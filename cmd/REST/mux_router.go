@@ -7,12 +7,6 @@ import (
 	"github.com/gorilla/mux"
 )
 
-type muxRouter struct{}
-
-func NewMuxRouter() Router {
-	return &muxRouter{}
-}
-
 var muxDispatcher = mux.NewRouter()
 
 func (*muxRouter) GET(uri string, f func(w http.ResponseWriter, r *http.Request)) {
@@ -21,6 +15,14 @@ func (*muxRouter) GET(uri string, f func(w http.ResponseWriter, r *http.Request)
 
 func (*muxRouter) POST(uri string, f func(w http.ResponseWriter, r *http.Request)) {
 	muxDispatcher.HandleFunc(uri, f).Methods("POST")
+}
+
+func (*muxRouter) UPDATE(uri string, f func(w http.ResponseWriter, r *http.Request)) {
+	muxDispatcher.HandleFunc(uri, f).Methods("UPDATE")
+}
+
+func (*muxRouter) DELETE(uri string, f func(w http.ResponseWriter, r *http.Request)) {
+	muxDispatcher.HandleFunc(uri, f).Methods("DELETE")
 }
 
 func (*muxRouter) SERVE(port string) {

@@ -4,6 +4,7 @@ import (
 	server "cloudinary_demo/cmd/REST"
 	"cloudinary_demo/controller"
 	"fmt"
+	"github.com/joho/godotenv"
 	"os"
 )
 
@@ -16,6 +17,7 @@ func main() {
 	route.GET("/get", controller.GetPost)
 	route.GET("/register", controller.Register)
 
+	godotenv.Load(".env")
 	port := os.Getenv("PORT")
 	fmt.Println(port)
 	fmt.Println("Serving running on port 8000")

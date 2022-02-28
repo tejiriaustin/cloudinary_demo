@@ -2,6 +2,7 @@ package excelservice
 
 import (
 	"cloudinary_demo/model"
+	"github.com/joho/godotenv"
 	"github.com/xuri/excelize/v2"
 	"log"
 	"os"
@@ -9,6 +10,7 @@ import (
 )
 
 func OpenAndRead() ([][]string, error) {
+	_ = godotenv.Load("../.env")
 	fileName := os.Getenv("CLOUDINARY_URL")
 
 	f, err := excelize.OpenFile(fileName)
@@ -27,6 +29,8 @@ func OpenAndRead() ([][]string, error) {
 }
 
 func SaveToFile(dt model.Data) error {
+	_ = godotenv.Load("../.env")
+
 	fileName := os.Getenv("CLOUDINARY_URL")
 
 	f, err := excelize.OpenFile(fileName)
@@ -49,6 +53,7 @@ func toInt(s string) int {
 }
 
 func checkForLastItemPosition() string {
+	_ = godotenv.Load("../.env")
 	fileName := os.Getenv("CLOUDINARY_URL")
 
 	f, err := excelize.OpenFile(fileName)

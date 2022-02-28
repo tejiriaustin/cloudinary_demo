@@ -12,7 +12,7 @@ import (
 var (
 	post service.Service = service.NewService()
 	req  model.Data
-	m    middleware.Imiddleware = middleware.NewMiddleWare()
+	m    = middleware.NewMiddleWare()
 )
 
 func Register(w http.ResponseWriter, r *http.Request) {
